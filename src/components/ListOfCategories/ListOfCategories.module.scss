@@ -1,0 +1,24 @@
+.title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    h1,
+    h6 {
+        font-weight: 400;
+        font-size: larger;
+    }
+    h6 {
+        color: gray;
+        font-size: small;
+    }
+}
+
+.images {
+    img {
+        transition: 0.3s ease-in-out;
+    }
+    img:hover {
+        opacity: 0.8;
+    }
+}

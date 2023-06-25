@@ -1,0 +1,14 @@
+.footer {
+    background-color: #000000;
+    color: white;
+}
+.content {
+    font-style: italic;
+    color: gray;
+
+    > * > :first-child h3 {
+        padding: 0;
+        text-transform: uppercase;
+        color: white;
+    }
+}
