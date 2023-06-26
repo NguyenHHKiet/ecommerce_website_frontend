@@ -8,7 +8,6 @@ import InfoAnother from "../components/InfoAnother/InfoAnother";
 const HomePage = () => {
     const data = useLoaderData();
 
-    console.log(data);
     return (
         <Fragment>
             <Banner />

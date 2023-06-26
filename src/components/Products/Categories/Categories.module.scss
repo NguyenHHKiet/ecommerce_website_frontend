@@ -1,0 +1,48 @@
+.showcase {
+    display: grid;
+    grid-template-columns: 2.5fr 7.5fr;
+    height: 100vh;
+    .arrTitle {
+        display: flex;
+        flex-direction: column;
+        font-size: smaller;
+        > * {
+            text-decoration: none;
+            color: black;
+        }
+        > *:hover {
+            background-color: #f8f8f8;
+        }
+        :nth-child(1) {
+            background-color: black;
+            color: white;
+            font-size: medium;
+        }
+        :nth-child(3) {
+            background-color: #e2e4e2;
+            color: black;
+            font-size: medium;
+            font-weight: 400 !important;
+        }
+        :nth-child(7) {
+            background-color: #e2e4e2;
+            color: black;
+            font-size: medium;
+            font-weight: 400 !important;
+        }
+        :nth-child(10) {
+            background-color: #e2e4e2;
+            color: black;
+            font-size: medium;
+            font-weight: 400 !important;
+        }
+    }
+}
+
+.input {
+    max-width: 20rem;
+}
+
+.select {
+    max-width: 10rem;
+}

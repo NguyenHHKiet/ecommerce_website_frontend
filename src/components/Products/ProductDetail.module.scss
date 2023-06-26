@@ -1,0 +1,15 @@
+.showcase {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    img {
+        width: 100%;
+    }
+    p {
+        color: gray;
+        font-size: 0.9rem;
+    }
+    h1 {
+        font-weight: bolder;
+        font-size: x-large;
+    }
+}
