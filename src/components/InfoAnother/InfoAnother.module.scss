@@ -1,0 +1,52 @@
+.title {
+    background-color: #f8f9fa;
+    > * {
+        text-align: center;
+        font-style: italic;
+        font-weight: lighter;
+    }
+    h6 {
+        text-transform: uppercase;
+    }
+    p {
+        color: gray;
+        font-size: 0.9rem;
+    }
+}
+
+.subscribe {
+    :first-child {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        h1,
+        h6 {
+            font-weight: 400;
+            font-size: larger;
+        }
+        h6 {
+            color: gray;
+            font-size: smaller;
+        }
+    }
+    :last-child {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        flex-direction: row;
+        input,
+        button {
+            border-radius: 0;
+        }
+        input:hover,
+        input:active,
+        input:focus {
+            outline: none;
+        }
+        input::placeholder {
+            color: gray;
+            font-size: smaller;
+        }
+    }
+}

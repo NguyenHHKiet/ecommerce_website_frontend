@@ -15,10 +15,22 @@
 }
 
 .images {
+    font-style: italic;
+
     img {
+        width: 100%;
+        aspect-ratio: 1/1;
         transition: 0.3s ease-in-out;
     }
     img:hover {
         opacity: 0.8;
     }
+    p {
+        color: gray;
+        font-size: 0.9rem;
+    }
+}
+
+.product-content * {
+    text-align: center;
 }
