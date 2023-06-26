@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 
 import classes from "./ListOfProducts.module.scss";
 import ProductItem from "./ProductItem";
-import ProductDetail from "../Products/ProductDetail";
+import PopUpDetail from "../Products/PopUpDetail";
 
 const ListOfProducts = ({ data }) => {
     const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const ListOfProducts = ({ data }) => {
 
     return (
         <Fragment>
-            {isClose && <ProductDetail />}
+            {isClose && <PopUpDetail />}
             <div className="py-3">
                 <div className={classes.title}>
                     <h6 className="fst-italic text-uppercase">

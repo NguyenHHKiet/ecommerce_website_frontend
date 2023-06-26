@@ -1,6 +1,16 @@
 .showcase {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+
+    :last-child {
+        > p:nth-child(3) {
+            height: 15rem;
+            padding: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            // background-color: gray;
+        }
+    }
     img {
         width: 100%;
     }

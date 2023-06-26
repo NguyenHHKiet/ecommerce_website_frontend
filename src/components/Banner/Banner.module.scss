@@ -11,11 +11,14 @@
     max-width: 30rem;
     justify-content: center;
     button {
-        width: 50%;
+        width: 100%;
         font-weight: lighter;
     }
     h6 {
         font-size: smaller;
         font-weight: 400;
+    }
+    a {
+        width: 50%;
     }
 }
