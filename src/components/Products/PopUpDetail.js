@@ -14,7 +14,7 @@ const PopUpDetail = () => {
     let content = (
         <div className={`${classes.showcase} gap-4`}>
             <div>
-                <img src={isInfo.img} alt="img" />
+                <img src={isInfo.img[0]} alt="img" />
             </div>
             <div className="py-4 fst-italic position-relative">
                 <i

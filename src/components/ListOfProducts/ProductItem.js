@@ -24,7 +24,7 @@ const ProductItem = ({ product, isLink, type }) => {
                 name: product.name,
                 price: price,
                 category: product.category,
-                img: [product.img1, product.img2, product.img3, product.img4],
+                img: product.img,
                 long_desc: product.long_desc,
                 short_desc: product.short_desc,
                 _id: {
@@ -47,7 +47,7 @@ const ProductItem = ({ product, isLink, type }) => {
             className={classes.images}>
             <article>
                 <figure>
-                    <img src={product.img1} alt="img1" loading="lazy" />
+                    <img src={product.img[0]} alt="img1" loading="lazy" />
                 </figure>
                 <div className={classes["product-content"]}>
                     <h6>{product.name}</h6>

@@ -3,7 +3,10 @@ import { useParams } from "react-router-dom";
 import { detailProduct } from "../../../API/data";
 import RelatedContext from "../../../context/related-product";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Button from "react-bootstrap/Button";
+import ProductItem from "../../ListOfProducts/ProductItem";
 
 import classes from "./ProductDetail.module.scss";
 
@@ -32,25 +35,7 @@ const Description = ({ orderList, related }) => (
             <h1 className="text-uppercase fs-5 py-4">Related Product</h1>
             <Row>
                 {related.map((product) => (
-                    <Col
-                        key={product._id.$oid}
-                        xs={6}
-                        md={3}
-                        className={classes.images}>
-                        <article>
-                            <figure>
-                                <img
-                                    src={product.img}
-                                    alt="img1"
-                                    loading="lazy"
-                                />
-                            </figure>
-                            <div className={classes["product-content"]}>
-                                <h6>{product.name}</h6>
-                                <p>{product.price}</p>
-                            </div>
-                        </article>
-                    </Col>
+                    <ProductItem product={product} isLink={true} />
                 ))}
             </Row>
         </div>
@@ -64,11 +49,12 @@ const ProductDetail = () => {
     const [error, setError] = useState();
 
     const relatedCxt = useContext(RelatedContext);
-    console.log(relatedCxt.items);
 
     let orderList, content;
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+
         const transformData = (product) => {
             const price = `${Number(product.price)
                 .toLocaleString("vi-VN", { style: "currency", currency: "VND" })
@@ -104,10 +90,18 @@ const ProductDetail = () => {
                             </p>
                             <p className="ps-2">{obj.category}</p>
                         </div>
-                        <button className="bg-black text-white py-2 px-4 mt-2 fst-italic">
-                            <i className="bi bi-cart-check-fill pe-2"></i>{" "}
-                            Browse collections
-                        </button>
+                        <InputGroup style={{ maxWidth: "20rem" }}>
+                            <Form.Control
+                                placeholder="QUANTITY"
+                                aria-label="QUANTITY"
+                                className="rounded-0 fst-italic opacity-75"
+                            />
+                            <Button
+                                variant="dark"
+                                className="bg-black text-white fst-italic rounded-0">
+                                Add to Cart
+                            </Button>
+                        </InputGroup>
                     </div>
                 </div>
                 <Description orderList={orderList} related={relatedCxt.items} />

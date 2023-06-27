@@ -27,7 +27,7 @@ const relatedReducer = (state, action) => {
         }
 
         return {
-            items: updatedItems,
+            items: updatedItems.slice(0, 4),
         };
     }
 

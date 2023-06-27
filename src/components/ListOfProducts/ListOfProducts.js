@@ -8,6 +8,19 @@ import PopUpDetail from "../Products/PopUpDetail";
 
 const ListOfProducts = ({ data }) => {
     const isClose = useSelector((state) => state.onClose);
+    const isData = data.map((product) => {
+        return {
+            name: product.name,
+            price: product.price,
+            category: product.category,
+            img: [product.img1, product.img2, product.img3, product.img4],
+            long_desc: product.long_desc,
+            short_desc: product.short_desc,
+            _id: {
+                $oid: product._id.$oid,
+            },
+        };
+    });
 
     return (
         <Fragment>
@@ -23,7 +36,7 @@ const ListOfProducts = ({ data }) => {
                 </div>
                 <div className={`d-grid gap-4 py-4`}>
                     <Row>
-                        {data.map((product) => (
+                        {isData.map((product) => (
                             <ProductItem
                                 key={product._id["$oid"]}
                                 product={product}

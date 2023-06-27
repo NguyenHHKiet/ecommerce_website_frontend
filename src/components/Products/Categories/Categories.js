@@ -13,9 +13,9 @@ const arrTitle = [
     "IPHONE & MAC",
     "iPhone",
     "iPad",
-    "Macbook",
+    "MacBook",
     "WIRELESS",
-    "Airpod",
+    "AirPod",
     "Watch",
     "OTHER",
     "Mouse",
@@ -28,15 +28,29 @@ const Categories = () => {
     const [params] = useSearchParams();
     const sortId = params.get("sort");
 
-    let content = data;
+    const isData = data.map((product) => {
+        return {
+            name: product.name,
+            price: product.price,
+            category: product.category,
+            img: [product.img1, product.img2, product.img3, product.img4],
+            long_desc: product.long_desc,
+            short_desc: product.short_desc,
+            _id: {
+                $oid: product._id.$oid,
+            },
+        };
+    });
+
+    let content = isData;
     if (sortId) {
         switch (sortId.toLowerCase()) {
             case "all":
-                content = data;
+                content = isData;
                 break;
 
             default:
-                content = data.filter(
+                content = isData.filter(
                     (item) => item.category === sortId.toLowerCase()
                 );
                 break;
