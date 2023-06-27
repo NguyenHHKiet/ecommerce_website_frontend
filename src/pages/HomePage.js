@@ -6,6 +6,8 @@ import ListOfProducts from "../components/ListOfProducts/ListOfProducts";
 import InfoAnother from "../components/InfoAnother/InfoAnother";
 
 const HomePage = () => {
+    // window.scrollTo(0, 0);
+
     const data = useLoaderData();
 
     return (

@@ -5,7 +5,7 @@ const initialPopUpState = {
         name: "",
         price: "",
         category: "",
-        img: "",
+        img: [],
         long_desc: "",
         short_desc: "",
         _id: {
@@ -16,18 +16,16 @@ const initialPopUpState = {
 };
 
 const popupReducer = (state = initialPopUpState, action) => {
-    if (action.type === "SELECT") {
+    if (action.type === "SELECTION") {
         return {
             info: {
-                name: action.payload.name,
-                price: action.payload.price,
-                category: action.payload.category,
-                img: action.payload.img,
-                long_desc: action.payload.long_desc,
-                short_desc: action.payload.short_desc,
-                _id: {
-                    $oid: action.payload._id,
-                },
+                name: action.payload.info.name,
+                price: action.payload.info.price,
+                category: action.payload.info.category,
+                img: action.payload.info.img,
+                long_desc: action.payload.info.long_desc,
+                short_desc: action.payload.info.short_desc,
+                _id: action.payload.info._id,
             },
             onClose: false,
         };
@@ -35,15 +33,13 @@ const popupReducer = (state = initialPopUpState, action) => {
     if (action.type === "SHOW_POPUP") {
         return {
             info: {
-                name: action.payload.name,
-                price: action.payload.price,
-                category: action.payload.category,
-                img: action.payload.img,
-                long_desc: action.payload.long_desc,
-                short_desc: action.payload.short_desc,
-                _id: {
-                    $oid: action.payload._id,
-                },
+                name: action.payload.info.name,
+                price: action.payload.info.price,
+                category: action.payload.info.category,
+                img: action.payload.info.img,
+                long_desc: action.payload.info.long_desc,
+                short_desc: action.payload.info.short_desc,
+                _id: action.payload.info._id,
             },
             onClose: true,
         };

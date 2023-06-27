@@ -3,7 +3,7 @@
     grid-template-columns: repeat(2, 1fr);
 
     :last-child {
-        > p:nth-child(3) {
+        > :nth-child(4) {
             height: 15rem;
             padding: 0.5rem;
             overflow: hidden;

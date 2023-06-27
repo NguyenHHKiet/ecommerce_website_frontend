@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { Fragment } from "react";
+import { useSelector } from "react-redux";
 import Row from "react-bootstrap/Row";
 
 import classes from "./ListOfProducts.module.scss";
@@ -7,14 +7,7 @@ import ProductItem from "./ProductItem";
 import PopUpDetail from "../Products/PopUpDetail";
 
 const ListOfProducts = ({ data }) => {
-    const dispatch = useDispatch();
     const isClose = useSelector((state) => state.onClose);
-    const [detail, setDetail] = useState(null);
-
-    if (detail) {
-        dispatch({ type: "SHOW_POPUP", payload: detail.info });
-        setDetail(null);
-    }
 
     return (
         <Fragment>
@@ -34,7 +27,7 @@ const ListOfProducts = ({ data }) => {
                             <ProductItem
                                 key={product._id["$oid"]}
                                 product={product}
-                                setDetail={setDetail}
+                                type={"SHOW_POPUP"}
                             />
                         ))}
                     </Row>

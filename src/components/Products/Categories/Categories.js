@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useLoaderData, useSearchParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-
-import classes from "./Categories.module.scss";
 import ProductItem from "../../ListOfProducts/ProductItem";
 import Row from "react-bootstrap/esm/Row";
-import { useDispatch } from "react-redux";
+
+import classes from "./Categories.module.scss";
 
 const arrTitle = [
     "APPLE",
@@ -28,14 +27,6 @@ const Categories = () => {
     const data = useLoaderData();
     const [params] = useSearchParams();
     const sortId = params.get("sort");
-
-    const dispatch = useDispatch();
-    const [detail, setDetail] = useState(null);
-
-    if (detail) {
-        dispatch({ type: "SELECT", payload: detail.info });
-        setDetail(null);
-    }
 
     let content = data;
     if (sortId) {
@@ -72,6 +63,43 @@ const Categories = () => {
         );
     };
 
+    const categoryLeft = (
+        <div className="d-flex justify-content-between mb-3">
+            <InputGroup className={`${classes.input}`}>
+                <Form.Control
+                    placeholder="Enter Search Here!"
+                    aria-label="Enter Search Here!"
+                    className="py-2"
+                />
+            </InputGroup>
+            <Form.Select className={classes.select}>
+                <option>Default sorting</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </Form.Select>
+        </div>
+    );
+
+    const categoryRight = (
+        <div className={`d-grid gap-4 py-4`}>
+            <Row>
+                {content.length > 0 ? (
+                    content.map((product) => (
+                        <ProductItem
+                            key={product._id.$oid}
+                            product={product}
+                            isLink={true}
+                            type={"SELECTION"}
+                        />
+                    ))
+                ) : (
+                    <p>Not Found Product</p>
+                )}
+            </Row>
+        </div>
+    );
+
     return (
         <div className={`${classes.showcase} gap-4`}>
             <div className="">
@@ -81,37 +109,8 @@ const Categories = () => {
                 </div>
             </div>
             <div>
-                <div className="d-flex justify-content-between mb-3">
-                    <InputGroup className={`${classes.input}`}>
-                        <Form.Control
-                            placeholder="Enter Search Here!"
-                            aria-label="Enter Search Here!"
-                            className="py-2"
-                        />
-                    </InputGroup>
-                    <Form.Select className={classes.select}>
-                        <option>Default sorting</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </Form.Select>
-                </div>
-                <div className={`d-grid gap-4 py-4`}>
-                    <Row>
-                        {content.length > 0 ? (
-                            content.map((product) => (
-                                <ProductItem
-                                    key={product._id.$oid}
-                                    product={product}
-                                    setDetail={setDetail}
-                                    isLink={true}
-                                />
-                            ))
-                        ) : (
-                            <p>Not Found Product</p>
-                        )}
-                    </Row>
-                </div>
+                {categoryLeft}
+                {categoryRight}
             </div>
         </div>
     );

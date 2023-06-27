@@ -1,6 +1,9 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Root, { loader } from "./components/Layout/Root";
+import { loader } from "./API/data";
+import RelatedProductProvider from "./context/RelatedProductProvider";
+
+import Root from "./components/Layout/Root";
 import Error from "./pages/Error";
 import HomePage from "./pages/HomePage";
 import ShopPage from "./pages/ShopPage";
@@ -29,7 +32,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-    return <RouterProvider router={router} />;
+    return (
+        <RelatedProductProvider>
+            <RouterProvider router={router} />
+        </RelatedProductProvider>
+    );
 }
 
 export default App;
