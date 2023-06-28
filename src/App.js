@@ -1,6 +1,7 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { loader } from "./API/data";
+import { tokenLoader } from "./utils/auth";
 import RelatedProductProvider from "./context/RelatedProductProvider";
 
 import Root from "./components/Layout/Root";
@@ -12,12 +13,15 @@ import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import { action as logoutAction } from "./pages/Logout";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Root />,
         errorElement: <Error />,
+        id: "root",
+        loader: tokenLoader,
         children: [
             { index: true, element: <HomePage />, loader: loader },
             { path: "shop", element: <ShopPage />, loader: loader },
@@ -27,6 +31,7 @@ const router = createBrowserRouter([
 
             { path: "login", element: <LoginPage /> },
             { path: "register", element: <RegisterPage /> },
+            { path: "logout", action: logoutAction },
         ],
     },
 ]);

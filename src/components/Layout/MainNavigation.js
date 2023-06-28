@@ -1,8 +1,10 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useRouteLoaderData, Form } from "react-router-dom";
 import classes from "./MainNavigation.module.scss";
 
 const MainNavigation = () => {
+    const token = useRouteLoaderData("root");
+
     return (
         <header className={`${classes.header} container`}>
             <nav>
@@ -31,6 +33,7 @@ const MainNavigation = () => {
             <nav>
                 <ul>
                     <li>
+                        <i className="bi bi-bag-check-fill me-1"></i>
                         <NavLink
                             to={"/cart"}
                             className={({ isActive }) =>
@@ -39,17 +42,32 @@ const MainNavigation = () => {
                             Cart
                         </NavLink>
                     </li>
-                    <li>
-                        <i className="fa fa-user"></i>
-                        <NavLink
-                            to={"/login"}
-                            className={({ isActive }) =>
-                                isActive ? classes.active : undefined
-                            }>
-                            {" "}
-                            Login
-                        </NavLink>
-                    </li>
+                    {token ? (
+                        <>
+                            <li>
+                                <i className="bi bi-person-circle me-1"></i>
+                                <NavLink>{token.username}</NavLink>
+                                <i
+                                    class="bi bi-caret-down-fill"
+                                    style={{ fontSize: "0.75rem" }}></i>
+                            </li>
+                            <li className="fst-italic">
+                                <Form action="/logout" method="post">
+                                    <button>(Logout)</button>
+                                </Form>
+                            </li>
+                        </>
+                    ) : (
+                        <li>
+                            <NavLink
+                                to={"/login"}
+                                className={({ isActive }) =>
+                                    isActive ? classes.active : undefined
+                                }>
+                                Login
+                            </NavLink>
+                        </li>
+                    )}
                 </ul>
             </nav>
         </header>

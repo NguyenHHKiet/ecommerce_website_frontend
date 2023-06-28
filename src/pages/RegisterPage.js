@@ -1,8 +1,8 @@
 import React from "react";
-import image from "../assets/images/banner1.jpg";
+import RegisterAuth from "../components/Auth/RegisterAuth";
 
 const RegisterPage = () => {
-    return <div style={{ background: `url(${image})` }}>RegisterPage</div>;
+    return <RegisterAuth />;
 };
 
 export default RegisterPage;
