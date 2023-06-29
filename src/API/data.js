@@ -16,20 +16,12 @@ export async function loader() {
     }
 }
 
-export async function detailProduct(
-    productId,
-    setApply,
-    setIsLoading,
-    setError
-) {
-    setIsLoading(true);
+export async function loadDetail({ params }) {
+    // {request: Request, params: {…}, context: undefined}
+    const id = params.productId;
     const resData = await loader();
 
-    const item = resData.filter((item) => item._id.$oid === productId);
-    if (item.length > 0) {
-        setApply(...item);
-        setIsLoading(false);
-    } else {
-        setError("Something went wrong");
-    }
+    const item = resData.filter((item) => item._id.$oid === id);
+
+    return item;
 }

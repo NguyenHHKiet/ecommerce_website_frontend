@@ -1,8 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useRouteError, isRouteErrorResponse } from "react-router-dom";
 import "./NotFound.scss";
 
 export default function NotFound() {
+    const error = useRouteError();
+
     return (
         <body className="not-found">
             <main className="main-not-found">
@@ -104,7 +106,15 @@ export default function NotFound() {
                     </svg>
                 </div>
                 <div>
-                    <h1 className="not-found">404</h1>
+                    <h1 className="not-found">
+                        {isRouteErrorResponse(error) ? (
+                            <>
+                                {error.status} {error.statusText}
+                            </>
+                        ) : (
+                            <>{error.message || error}</>
+                        )}
+                    </h1>
                     <p className="not-found">
                         We couldn’t find the page you were looking for. It may
                         have been moved, or it just doesn’t exist.

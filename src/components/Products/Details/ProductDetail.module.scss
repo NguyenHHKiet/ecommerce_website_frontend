@@ -23,44 +23,28 @@
         font-size: x-large;
     }
 }
-.quantity-control {
-    // position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: fit-content;
-    margin: 0 auto;
-    background: transparent;
-    border-radius: 10px;
-    padding: 1rem 0.4rem;
-}
 
-.quantity-btn {
-    background: transparent;
-    border: none;
-    outline: none;
-    margin: 0;
-    padding: 0px 8px;
-    cursor: pointer;
-    svg {
-        width: 15px;
-        height: 15px;
-    }
-}
-
-.quantity-input {
-    outline: none;
-    user-select: none;
-    text-align: center;
-    width: 47px;
+.quantity {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: none;
-    ::-webkit-inner-spin-button,
-    ::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
+    max-width: 20rem;
+    position: relative;
+
+    .buttonQuantity {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        right: 7rem;
+        z-index: 10;
+        input,
+        button {
+            text-align: center;
+            border: transparent;
+            height: min-content;
+        }
+        input {
+            width: 1rem;
+        }
     }
 }

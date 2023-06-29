@@ -1,19 +1,19 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { loader } from "./API/data";
 import { tokenLoader } from "./utils/auth";
 import RelatedProductProvider from "./context/RelatedProductProvider";
 
 import Root from "./components/Layout/Root";
 import Error from "./pages/Error";
-import HomePage from "./pages/HomePage";
-import ShopPage from "./pages/ShopPage";
-import DetailPage from "./pages/DetailPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { action as logoutAction } from "./pages/Logout";
+
+const HomePage = lazy(() => import("./pages/HomePage"));
+const ShopPage = lazy(() => import("./pages/ShopPage"));
+const DetailPage = lazy(() => import("./pages/DetailPage"));
 
 const router = createBrowserRouter([
     {
@@ -23,9 +23,38 @@ const router = createBrowserRouter([
         id: "root",
         loader: tokenLoader,
         children: [
-            { index: true, element: <HomePage />, loader: loader },
-            { path: "shop", element: <ShopPage />, loader: loader },
-            { path: "detail/:productId", element: <DetailPage /> },
+            {
+                index: true,
+                element: (
+                    <Suspense fallback={<p>Loading...</p>}>
+                        <HomePage />
+                    </Suspense>
+                ),
+                loader: () =>
+                    import("./API/data").then((module) => module.loader()),
+            },
+            {
+                path: "shop",
+                element: (
+                    <Suspense fallback={<p>Loading...</p>}>
+                        <ShopPage />
+                    </Suspense>
+                ),
+                loader: () =>
+                    import("./API/data").then((module) => module.loader()),
+            },
+            {
+                path: "detail/:productId",
+                element: (
+                    <Suspense fallback={<p>Loading...</p>}>
+                        <DetailPage />
+                    </Suspense>
+                ),
+                loader: (meta) =>
+                    import("./API/data").then((module) =>
+                        module.loadDetail(meta)
+                    ),
+            },
             { path: "cart", element: <CartPage /> },
             { path: "checkout", element: <CheckoutPage /> },
 

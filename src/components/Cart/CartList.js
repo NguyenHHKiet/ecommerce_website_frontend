@@ -1,8 +1,7 @@
 import React, { Fragment, useEffect } from "react";
-import Categories from "./Categories/Categories";
-import classes from "./ProductList.module.scss";
+import classes from "./CartList.module.scss";
 
-const ProductList = () => {
+const CartList = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -10,14 +9,13 @@ const ProductList = () => {
     return (
         <Fragment>
             <div className={`${classes.banner} px-5 mb-5 bg-body-secondary`}>
-                <h2 className="text-uppercase fst-italic">Shop</h2>
+                <h2 className="text-uppercase fst-italic">Cart</h2>
                 <p className="text-uppercase fst-italic opacity-50 fw-semibold">
-                    Shop
+                    Cart
                 </p>
             </div>
-            <Categories />
         </Fragment>
     );
 };
 
-export default ProductList;
+export default CartList;
