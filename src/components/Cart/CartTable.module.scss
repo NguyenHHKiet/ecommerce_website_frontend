@@ -1,0 +1,35 @@
+table.showcase {
+    width: 100%;
+    input,
+    i {
+        text-align: center;
+        border: transparent;
+        height: min-content;
+        cursor: pointer;
+    }
+    input {
+        background: transparent;
+        max-width: 2rem;
+        // padding: 0 0.5rem;
+    }
+    i {
+        padding: 0.5rem;
+    }
+
+    th {
+        padding: 0.5rem 1rem;
+        font-weight: 400;
+    }
+    tbody tr {
+        td:nth-child(3),
+        td:nth-child(5) {
+            color: gray;
+        }
+    }
+}
+
+.buttonQuantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

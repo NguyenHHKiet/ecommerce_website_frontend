@@ -1,7 +1,7 @@
 import React from "react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Link, useNavigate, useLocation, redirect } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -29,11 +29,15 @@ const AuthForm = () => {
     const enteredPassword = useRef();
     const enteredPhone = useRef();
 
+    // switch page on the top of the page
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        event.stopPropagation();
-
         const form = event.currentTarget;
+
         setValidated(true);
 
         const enteredEmailValue = enteredEmail.current.value;

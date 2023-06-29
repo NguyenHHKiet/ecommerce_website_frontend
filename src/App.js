@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { tokenLoader } from "./utils/auth";
+import { tokenLoader, checkAuthLoader } from "./utils/auth";
+import { cartLoader } from "./utils/cart";
 import RelatedProductProvider from "./context/RelatedProductProvider";
 
 import Root from "./components/Layout/Root";
@@ -55,8 +56,12 @@ const router = createBrowserRouter([
                         module.loadDetail(meta)
                     ),
             },
-            { path: "cart", element: <CartPage /> },
-            { path: "checkout", element: <CheckoutPage /> },
+            { path: "cart", element: <CartPage />, loader: cartLoader },
+            {
+                path: "checkout",
+                element: <CheckoutPage />,
+                loader: checkAuthLoader,
+            },
 
             { path: "login", element: <LoginPage /> },
             { path: "register", element: <RegisterPage /> },

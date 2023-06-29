@@ -94,20 +94,19 @@ const useGlobalReducer = (state = initialState, action) => {
 
     if (action.type === "ADD_CART") {
         console.log(action.type);
-        const cartArr =
-            JSON.parse(localStorage.getItem("cartArr")) || state.cart;
+        const cart = JSON.parse(localStorage.getItem("cartArr")) || state.cart;
 
         // transform price to number
         const price = action.item.price.slice(0, -3).trim().split(".").join("");
         // total amount of price is
         const updatedTotalAmount =
-            cartArr.totalAmount + price * action.item.amount;
+            cart.totalAmount + price * action.item.amount;
 
-        const existingCartItemIndex = cartArr.listCart.findIndex(
+        const existingCartItemIndex = cart.listCart.findIndex(
             (item) => item._id.$oid === action.item._id.$oid
         );
 
-        const existingCartItem = cartArr.listCart[existingCartItemIndex];
+        const existingCartItem = cart.listCart[existingCartItemIndex];
         let updatedItems;
 
         if (existingCartItem) {
@@ -117,17 +116,29 @@ const useGlobalReducer = (state = initialState, action) => {
                 amount: existingCartItem.amount + action.item.amount,
             };
             // create new array
-            updatedItems = [...cartArr.listCart];
+            updatedItems = [...cart.listCart];
             // updated item in cart with index
             updatedItems[existingCartItemIndex] = updatedItem;
 
             // save updated cart items
-            localStorage.setItem("cartArr", updatedItems);
+            localStorage.setItem(
+                "cartArr",
+                JSON.stringify({
+                    listCart: updatedItems,
+                    totalAmount: updatedTotalAmount,
+                })
+            );
         } else {
-            updatedItems = cartArr.listCart.concat(action.item);
+            updatedItems = cart.listCart.concat(action.item);
 
             // save cart items
-            localStorage.setItem("cartArr", updatedItems);
+            localStorage.setItem(
+                "cartArr",
+                JSON.stringify({
+                    listCart: updatedItems,
+                    totalAmount: updatedTotalAmount,
+                })
+            );
         }
 
         return {
@@ -143,6 +154,48 @@ const useGlobalReducer = (state = initialState, action) => {
     }
     if (action.type === "DELETE_CART") {
         console.log(action.type);
+        const cart = JSON.parse(localStorage.getItem("cartArr")) || state.cart;
+
+        const existingCartItemIndex = cart.listCart.findIndex(
+            (item) => item._id.$oid === action.id
+        );
+
+        const existingCartItem = cart.listCart[existingCartItemIndex];
+
+        const price = existingCartItem.price
+            .slice(0, -3)
+            .trim()
+            .split(".")
+            .join("");
+
+        let updatedItems, updatedTotalAmount;
+
+        if (existingCartItem) {
+            // updated
+            updatedTotalAmount =
+                cart.totalAmount - price * existingCartItem.amount;
+            // remove object
+            updatedItems = cart.listCart.filter(
+                (item) => item._id.$oid !== existingCartItem._id.$oid
+            );
+
+            // save updated items
+            localStorage.setItem(
+                "cartArr",
+                JSON.stringify({
+                    listCart: updatedItems,
+                    totalAmount: updatedTotalAmount,
+                })
+            );
+        }
+
+        return {
+            ...state,
+            cart: {
+                listCart: updatedItems,
+                totalAmount: updatedTotalAmount,
+            },
+        };
     }
 
     return state;

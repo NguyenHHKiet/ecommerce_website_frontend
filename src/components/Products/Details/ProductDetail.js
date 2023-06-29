@@ -6,8 +6,8 @@ import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
+import { ToastContainer, toast } from "react-toastify";
 import ProductItem from "../../ListOfProducts/ProductItem";
-import NotFound from "../../NotFound/NotFound";
 
 import classes from "./ProductDetail.module.scss";
 
@@ -61,6 +61,7 @@ const Description = ({ orderList, related }) => (
 
 const ProductDetail = () => {
     const [data] = useLoaderData();
+    // localStorage.removeItem("cartArr");
 
     const [enteredAmount, setEnteredAmount] = useState(1);
     const dispatch = useDispatch();
@@ -83,6 +84,7 @@ const ProductDetail = () => {
     const detail = transformData(data);
 
     const addToCartHandler = () => {
+        toast("🦄 Wow so easy!");
         const addAmountObj = {
             ...detail,
             amount: Number(enteredAmount),
@@ -94,6 +96,7 @@ const ProductDetail = () => {
         const orderList = detail.short_desc.split(".");
         content = (
             <Fragment>
+                <ToastContainer autoClose={2000} />
                 <div className={`${classes.showcase} gap-4 py-4`}>
                     <div>
                         <img src={detail.img} alt="img" />
