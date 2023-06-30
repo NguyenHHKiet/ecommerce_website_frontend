@@ -18,6 +18,14 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 const ShopPage = lazy(() => import("./pages/ShopPage"));
 const DetailPage = lazy(() => import("./pages/DetailPage"));
 
+const Loader = () => {
+    return (
+        <div className="vh-100 d-flex justify-content-center align-items-center">
+            <Spinner animation="border" />
+        </div>
+    );
+};
+
 const router = createBrowserRouter([
     {
         path: "/",
@@ -29,7 +37,7 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: (
-                    <Suspense fallback={<Spinner animation="border" />}>
+                    <Suspense fallback={<Loader />}>
                         <HomePage />
                     </Suspense>
                 ),
@@ -39,7 +47,7 @@ const router = createBrowserRouter([
             {
                 path: "shop",
                 element: (
-                    <Suspense fallback={<Spinner animation="border" />}>
+                    <Suspense fallback={<Loader />}>
                         <ShopPage />
                     </Suspense>
                 ),
@@ -49,7 +57,7 @@ const router = createBrowserRouter([
             {
                 path: "detail/:productId",
                 element: (
-                    <Suspense fallback={<Spinner animation="border" />}>
+                    <Suspense fallback={<Loader />}>
                         <DetailPage />
                     </Suspense>
                 ),
