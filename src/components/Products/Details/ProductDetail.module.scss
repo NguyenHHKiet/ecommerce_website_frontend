@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+.showcase {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    :last-child {
+        > :nth-child(3) {
+            height: 15rem;
+            // padding: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    img {
+        width: 100%;
+    }
+    p {
+        color: gray;
+        font-size: 0.9rem;
+    }
+    h1 {
+        font-weight: bolder;
+        font-size: x-large;
+    }
+}
+
+.quantity {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 20rem;
+    position: relative;
+
+    .buttonQuantity {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        right: 7rem;
+        z-index: 10;
+        input,
+        button {
+            text-align: center;
+            border: transparent;
+            height: min-content;
+        }
+        input {
+            width: 1rem;
+        }
+    }
+}

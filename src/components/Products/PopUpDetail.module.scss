@@ -1,0 +1,25 @@
+.showcase {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    :last-child {
+        > :nth-child(4) {
+            height: 15rem;
+            padding: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            // background-color: gray;
+        }
+    }
+    img {
+        width: 100%;
+    }
+    p {
+        color: gray;
+        font-size: 0.9rem;
+    }
+    h1 {
+        font-weight: bolder;
+        font-size: x-large;
+    }
+}

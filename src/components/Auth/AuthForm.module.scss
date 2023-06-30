@@ -1,0 +1,16 @@
+.showcase {
+    background: url(../../assets/images/banner1.jpg) no-repeat center;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    max-width: 25rem;
+    height: min-content;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 14px;
+    padding: 2rem;
+}

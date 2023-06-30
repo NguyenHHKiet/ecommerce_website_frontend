@@ -1,0 +1,24 @@
+.showcase {
+    position: relative;
+    width: 100%;
+    // height: 65vh;
+}
+
+.content {
+    padding: 0 4rem;
+    display: flex;
+    flex-direction: column;
+    max-width: 30rem;
+    justify-content: center;
+    button {
+        width: 100%;
+        font-weight: lighter;
+    }
+    h6 {
+        font-size: smaller;
+        font-weight: 400;
+    }
+    a {
+        width: 50%;
+    }
+}
