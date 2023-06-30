@@ -20,10 +20,10 @@ const Banner = () => {
                 <h2 className="text-uppercase fst-italic">
                     20% Off On New Season
                 </h2>
-                <Link to={"/shop"}>
-                    <button className="bg-black text-white py-1 px-3 mt-2 fst-italic">
-                        Browse collections
-                    </button>
+                <Link
+                    to={"/shop"}
+                    className="bg-black text-white py-1 px-3 mt-2 fst-italic">
+                    Browse collections
                 </Link>
             </div>
         </Ratio>

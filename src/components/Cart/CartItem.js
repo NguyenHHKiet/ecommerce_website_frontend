@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import classes from "./CartItem.module.scss";
@@ -6,16 +6,43 @@ import classes from "./CartItem.module.scss";
 const CartItem = ({ item, setIsLoading }) => {
     const dispatch = useDispatch();
 
+    const [enteredAmount, setEnteredAmount] = useState(item.amount);
+
     const price =
         Number(item.price.slice(0, -3).trim().split(".").join("")) *
-        item.amount;
+        enteredAmount;
     const total = `${price
         .toLocaleString("vi-VN", { style: "currency", currency: "VND" })
         .slice(0, -1)} VND`;
 
+    const moduleAction = (type, item) => {
+        dispatch({ type: type, item: item });
+        setIsLoading((prevent) => !prevent);
+    };
+
+    // delete item from
     const deleteItemCartHandler = () => {
-        setIsLoading(true);
-        dispatch({ type: "DELETE_CART", id: item._id.$oid });
+        moduleAction("DELETE_CART", { id: item._id.$oid });
+    };
+
+    // updated amount of cart items
+    const minusHandler = () => {
+        if (enteredAmount > 1) {
+            setEnteredAmount(enteredAmount - 1);
+            moduleAction("UPDATE_CART", {
+                amount: enteredAmount - 1,
+                id: item._id.$oid,
+            });
+        } else {
+            deleteItemCartHandler();
+        }
+    };
+    const addHandler = () => {
+        setEnteredAmount(enteredAmount + 1);
+        moduleAction("UPDATE_CART", {
+            amount: enteredAmount + 1,
+            id: item._id.$oid,
+        });
     };
 
     return (
@@ -29,15 +56,21 @@ const CartItem = ({ item, setIsLoading }) => {
             <td>{item.price}</td>
             <td>
                 <div className={classes.buttonQuantity}>
-                    <i className="bi bi-caret-left-fill"></i>
+                    <i
+                        className="bi bi-caret-left-fill"
+                        onClick={minusHandler}></i>
                     <input
                         id="id_form-0-quantity"
                         min={0}
+                        pattern="[0-9]+"
                         name="form-0-quantity"
-                        value={item.amount}
+                        readOnly
+                        value={enteredAmount}
                         type="number"
                     />
-                    <i className="bi bi-caret-right-fill"></i>
+                    <i
+                        className="bi bi-caret-right-fill"
+                        onClick={addHandler}></i>
                 </div>
             </td>
             <td>{total}</td>

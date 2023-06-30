@@ -155,13 +155,61 @@ const useGlobalReducer = (state = initialState, action) => {
     }
     if (action.type === "UPDATE_CART") {
         console.log(action.type);
+        const cart = JSON.parse(localStorage.getItem("cartArr")) || state.cart;
+
+        const existingCartItemIndex = cart.listCart.findIndex(
+            (item) => item._id.$oid === action.item.id
+        );
+
+        const existingCartItem = cart.listCart[existingCartItemIndex];
+
+        // subtract the amount out
+        const oldPrice =
+            existingCartItem.price.slice(0, -3).trim().split(".").join("") *
+            existingCartItem.amount;
+        let updatedTotalAmount = cart.totalAmount - oldPrice;
+        // updated quantity
+        const updatedItem = {
+            ...existingCartItem,
+            amount: action.item.amount,
+        };
+
+        // transform price to number
+        const newPrice =
+            updatedItem.price.slice(0, -3).trim().split(".").join("") *
+            updatedItem.amount;
+        // total amount of price is
+        updatedTotalAmount += newPrice;
+        let updatedItems;
+
+        // create new array
+        updatedItems = [...cart.listCart];
+        // updated item in cart with index
+        updatedItems[existingCartItemIndex] = updatedItem;
+
+        // save updated cart items
+        localStorage.setItem(
+            "cartArr",
+            JSON.stringify({
+                listCart: updatedItems,
+                totalAmount: updatedTotalAmount,
+            })
+        );
+
+        return {
+            ...state,
+            cart: {
+                listCart: updatedItems,
+                totalAmount: updatedTotalAmount,
+            },
+        };
     }
     if (action.type === "DELETE_CART") {
         console.log(action.type);
         const cart = JSON.parse(localStorage.getItem("cartArr")) || state.cart;
 
         const existingCartItemIndex = cart.listCart.findIndex(
-            (item) => item._id.$oid === action.id
+            (item) => item._id.$oid === action.item.id
         );
 
         const existingCartItem = cart.listCart[existingCartItemIndex];
@@ -208,19 +256,3 @@ const useGlobalReducer = (state = initialState, action) => {
 const store = createStore(useGlobalReducer);
 
 export default store;
-
-// create token clone
-const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-function generateString(length) {
-    let result = " ";
-    const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(
-            Math.floor(Math.random() * charactersLength)
-        );
-    }
-
-    return result;
-}
