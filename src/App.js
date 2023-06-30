@@ -1,8 +1,11 @@
 import React, { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { tokenLoader, checkAuthLoader } from "./utils/auth";
 import { cartLoader } from "./utils/cart";
+import { checkAuthLoader, tokenLoader } from "./utils/auth";
+import { action as logoutAction } from "./pages/Logout";
 import RelatedProductProvider from "./context/RelatedProductProvider";
+
+import Spinner from "react-bootstrap/Spinner";
 
 import Root from "./components/Layout/Root";
 import Error from "./pages/Error";
@@ -10,7 +13,6 @@ import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import { action as logoutAction } from "./pages/Logout";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const ShopPage = lazy(() => import("./pages/ShopPage"));
@@ -27,7 +29,7 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: (
-                    <Suspense fallback={<p>Loading...</p>}>
+                    <Suspense fallback={<Spinner animation="border" />}>
                         <HomePage />
                     </Suspense>
                 ),
@@ -37,7 +39,7 @@ const router = createBrowserRouter([
             {
                 path: "shop",
                 element: (
-                    <Suspense fallback={<p>Loading...</p>}>
+                    <Suspense fallback={<Spinner animation="border" />}>
                         <ShopPage />
                     </Suspense>
                 ),
@@ -47,7 +49,7 @@ const router = createBrowserRouter([
             {
                 path: "detail/:productId",
                 element: (
-                    <Suspense fallback={<p>Loading...</p>}>
+                    <Suspense fallback={<Spinner animation="border" />}>
                         <DetailPage />
                     </Suspense>
                 ),

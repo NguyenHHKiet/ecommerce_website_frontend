@@ -14,12 +14,14 @@ const initialState = {
     },
     onClose: false,
     userArr: [],
+    isAuthenticated: false,
     cart: { listCart: [], totalAmount: 0 },
 };
 
 const useGlobalReducer = (state = initialState, action) => {
     if (action.type === "SHOW_POPUP") {
         return {
+            ...state,
             info: {
                 name: action.payload.info.name,
                 price: action.payload.info.price,
@@ -82,9 +84,11 @@ const useGlobalReducer = (state = initialState, action) => {
             const expiration = new Date();
             expiration.setHours(expiration.getHours() + 1);
             localStorage.setItem("expiration", expiration.toISOString());
+            return { ...state, isAuthenticated: true };
         } else {
             alert("Please enter a new email & password");
         }
+        return state;
     }
 
     if (action.type === "ON_LOGOUT") {

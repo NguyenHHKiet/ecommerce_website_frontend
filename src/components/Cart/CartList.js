@@ -7,12 +7,11 @@ import Button from "react-bootstrap/Button";
 import CartTable from "./CartTable";
 import { cartLoader } from "../../utils/cart";
 
-import classes from "./CartList.module.scss";
-
 const CartList = () => {
     const cart = useLoaderData();
     const [data, setData] = useState(cart);
     const [isLoading, setIsLoading] = useState(false);
+    let totalAmount;
 
     // switch page on the top of the page
     useEffect(() => {
@@ -24,13 +23,17 @@ const CartList = () => {
         setIsLoading(false);
     }, [isLoading]);
 
-    const totalAmount = `${data.totalAmount
-        .toLocaleString("vi-VN", { style: "currency", currency: "VND" })
-        .slice(0, -1)} VND`;
+    if (data) {
+        totalAmount = `${data?.totalAmount
+            .toLocaleString("vi-VN", { style: "currency", currency: "VND" })
+            .slice(0, -1)} VND`;
+    }
 
     return (
         <Fragment>
-            <div className={`${classes.banner} px-5 mb-5 bg-body-secondary`}>
+            <div
+                className="px-5 mb-5 bg-body-secondary w-100 d-flex justify-content-between align-items-center"
+                style={{ height: "25vh" }}>
                 <h2 className="text-uppercase fst-italic">Cart</h2>
                 <p className="text-uppercase fst-italic text-secondary fw-semibold">
                     Cart
@@ -40,9 +43,9 @@ const CartList = () => {
                 <h4 className="text-uppercase fst-italic">shopping cart</h4>
                 <Row className="my-4 fst-italic">
                     <Col md={8} sm={12}>
-                        {data.listCart.length > 0 ? (
+                        {data?.listCart.length > 0 ? (
                             <CartTable
-                                items={data.listCart}
+                                items={data?.listCart}
                                 setIsLoading={setIsLoading}
                             />
                         ) : (
@@ -66,6 +69,7 @@ const CartList = () => {
                                     <Form.Control
                                         plaintext
                                         readOnly
+                                        defaultValue="0"
                                         value={totalAmount}
                                         className="text-end fs-6 text-muted"
                                     />

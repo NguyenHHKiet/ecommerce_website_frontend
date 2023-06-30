@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useRouteLoaderData, Form } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { tokenLoader } from "../../utils/auth";
+
 import classes from "./MainNavigation.module.scss";
 
 const MainNavigation = () => {
     const token = useRouteLoaderData("root");
+    const [user, setUser] = useState(token);
+    const isAuthenticated = useSelector((state) => state.isAuthenticated);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            setUser(tokenLoader);
+        }
+    }, [isAuthenticated]);
 
     return (
         <header className={`${classes.header} container`}>
@@ -33,20 +44,20 @@ const MainNavigation = () => {
             <nav>
                 <ul>
                     <li>
-                        <i className="bi bi-bag-check-fill me-1"></i>
                         <NavLink
                             to={"/cart"}
                             className={({ isActive }) =>
                                 isActive ? classes.active : undefined
                             }>
+                            <i className="bi bi-bag-check-fill me-1"></i>
                             Cart
                         </NavLink>
                     </li>
-                    {token ? (
+                    {user ? (
                         <>
                             <li>
                                 <i className="bi bi-person-circle me-1"></i>
-                                <NavLink>{token.username}</NavLink>
+                                <NavLink>{user.username}</NavLink>
                                 <i
                                     class="bi bi-caret-down-fill"
                                     style={{ fontSize: "0.75rem" }}></i>

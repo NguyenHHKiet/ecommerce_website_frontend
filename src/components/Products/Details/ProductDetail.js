@@ -72,6 +72,7 @@ const ProductDetail = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+    // localStorage.clear();
 
     if (!data)
         return (
@@ -85,11 +86,11 @@ const ProductDetail = () => {
 
     const addToCartHandler = () => {
         toast("🦄 Wow so easy!");
-        const addAmountObj = {
+        const addAmountObject = {
             ...detail,
             amount: Number(enteredAmount),
         };
-        dispatch({ type: "ADD_CART", item: addAmountObj });
+        dispatch({ type: "ADD_CART", item: addAmountObject });
     };
 
     if (detail) {
