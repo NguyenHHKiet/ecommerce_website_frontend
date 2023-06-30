@@ -20,7 +20,6 @@ const CartList = () => {
 
     useEffect(() => {
         setData(cartLoader);
-        setIsLoading(false);
     }, [isLoading]);
 
     if (data) {

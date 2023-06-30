@@ -74,6 +74,7 @@ const ProductDetail = () => {
     }, []);
     // localStorage.clear();
 
+    // Not Founded Product Id.
     if (!data)
         return (
             <h1
@@ -92,6 +93,9 @@ const ProductDetail = () => {
         };
         dispatch({ type: "ADD_CART", item: addAmountObject });
     };
+
+    const minusHandler = () => setEnteredAmount(enteredAmount - 1);
+    const addHandler = () => setEnteredAmount(enteredAmount + 1);
 
     if (detail) {
         const orderList = detail.short_desc.split(".");
@@ -124,18 +128,27 @@ const ProductDetail = () => {
                                 }}
                             />
                             <div className={classes.buttonQuantity}>
-                                <button className="btn minus1">-</button>
+                                <button
+                                    className="btn minus1"
+                                    onClick={minusHandler}>
+                                    -
+                                </button>
                                 <input
                                     id="id_form-0-quantity"
                                     min={0}
                                     name="form-0-quantity"
+                                    readOnly
                                     value={enteredAmount}
                                     type="number"
                                     onChange={(e) => {
                                         setEnteredAmount(e.target.value);
                                     }}
                                 />
-                                <button className="btn add1">+</button>
+                                <button
+                                    className="btn add1"
+                                    onClick={addHandler}>
+                                    +
+                                </button>
                             </div>
                             <Button
                                 onClick={addToCartHandler}
