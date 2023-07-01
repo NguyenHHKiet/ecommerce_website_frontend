@@ -2,8 +2,10 @@
 
 .showcase {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    :last-child {
+    > :nth-child(2) {
+        order: -1;
+    }
+    > :last-child {
         > :nth-child(3) {
             height: 15rem;
             // padding: 0.5rem;
@@ -66,13 +68,11 @@
     }
 }
 
-@media (max-width: 768px) {
-    .quantity {
-        button {
-            width: 100%;
-        }
-        .buttonQuantity {
-            right: 0rem;
+@media (min-width: 768px) {
+    .showcase {
+        grid-template-columns: repeat(3, auto);
+        > :nth-child(2) {
+            order: 0;
         }
     }
 }

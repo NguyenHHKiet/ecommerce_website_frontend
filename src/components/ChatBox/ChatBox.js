@@ -9,7 +9,7 @@ const ChatBox = () => {
         const backdrop = document.querySelector("#backdrop");
 
         function onChangeInput(e) {
-            if (e.key === "Enter" && !e.shiftKey) {
+            if (e.key === "Enter") {
                 e.preventDefault();
                 console.log(e.target.value);
             }

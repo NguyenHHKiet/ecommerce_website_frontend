@@ -25,11 +25,14 @@ export function getAuthToken() {
     return token;
 }
 
+// check token validity existing token
+// take data while rendering page
 export function tokenLoader() {
     const token = getAuthToken();
     return token;
 }
 
+// check into switch page if you are logged in
 export function checkAuthLoader() {
     const token = getAuthToken();
 

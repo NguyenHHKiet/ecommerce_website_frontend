@@ -71,19 +71,23 @@ const useGlobalReducer = (state = initialState, action) => {
         const userArr =
             JSON.parse(localStorage.getItem("userArr")) ?? state.userArr;
 
+        // find the user exists
         const existingUserIndex = userArr.findIndex(
             (user) =>
                 user.email === action.user.email &&
                 user.password === action.user.password
         );
+        // take user data from array
         const existingUser = userArr[existingUserIndex];
 
         if (existingUser) {
+            // save existing user current
             localStorage.setItem("currentUser", JSON.stringify(existingUser));
             // localStorage.setItem("token", generateString(12));
             const expiration = new Date();
             expiration.setHours(expiration.getHours() + 1);
             localStorage.setItem("expiration", expiration.toISOString());
+            // authentication
             return { ...state, isAuthenticated: true };
         } else {
             alert("Please enter a new email & password");
@@ -101,18 +105,18 @@ const useGlobalReducer = (state = initialState, action) => {
         console.log(action.type);
         const cart = JSON.parse(localStorage.getItem("cartArr")) ?? state.cart;
 
-        // transform price to number
-        const price = action.item.price.slice(0, -3).trim().split(".").join("");
-        // total amount of price is
-        const updatedTotalAmount =
-            cart.totalAmount + price * action.item.amount;
-
         const existingCartItemIndex = cart.listCart.findIndex(
             (item) => item._id.$oid === action.item._id.$oid
         );
 
         const existingCartItem = cart.listCart[existingCartItemIndex];
         let updatedItems;
+
+        // transform price to number
+        const price = action.item.price.slice(0, -3).trim().split(".").join("");
+        // total amount of price is
+        const updatedTotalAmount =
+            cart.totalAmount + price * action.item.amount;
 
         if (existingCartItem) {
             // updated quantity
@@ -209,6 +213,7 @@ const useGlobalReducer = (state = initialState, action) => {
         console.log(action.type);
         const cart = JSON.parse(localStorage.getItem("cartArr")) ?? state.cart;
 
+        // find the item in the cart
         const existingCartItemIndex = cart.listCart.findIndex(
             (item) => item._id.$oid === action.item.id
         );

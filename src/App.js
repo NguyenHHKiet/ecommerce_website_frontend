@@ -13,6 +13,8 @@ import CheckoutPage from "./pages/CheckoutPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 
+// Lazy routes are resolved on initial load and during the loading or submitting
+// Each lazy function will typically return the result of a dynamic import.
 const HomePage = lazy(() => import("./pages/HomePage"));
 const ShopPage = lazy(() => import("./pages/ShopPage"));
 const DetailPage = lazy(() => import("./pages/DetailPage"));

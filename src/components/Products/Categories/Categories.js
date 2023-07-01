@@ -53,7 +53,8 @@ const Categories = () => {
     let content = isData;
     // search items based on input
     const searchItemsHandler = (event) => {
-        if (event.key === "Enter") navigated(`?search=${enteredSearch}`);
+        if (event.key === "Enter" || event.charCode === 13)
+            navigated(`?search=${enteredSearch}`);
     };
 
     if (searchId) {
@@ -105,7 +106,7 @@ const Categories = () => {
                     aria-label="Enter Search Here!"
                     className="py-2"
                     onChange={(e) => setEnteredSearch(e.target.value)}
-                    onKeyDown={searchItemsHandler}
+                    onKeyPress={searchItemsHandler}
                 />
             </InputGroup>
             <Form.Select className={classes.select}>

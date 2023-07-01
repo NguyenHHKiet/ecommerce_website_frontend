@@ -46,9 +46,7 @@ const RelatedProductProvider = ({ children }) => {
 
     const relatedContext = {
         items: relatedState.items,
-        totalQuantity: 0,
         addItem: addItemToRelatedHandler,
-        removeItem: "",
     };
 
     return (
