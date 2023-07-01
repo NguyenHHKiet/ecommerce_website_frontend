@@ -94,7 +94,7 @@ const useGlobalReducer = (state = initialState, action) => {
     if (action.type === "ON_LOGOUT") {
         localStorage.removeItem("currentUser");
         localStorage.removeItem("expiration");
-        return { ...state, isAuthenticated: false };
+        return { ...state, isAuthenticated: !state.isAuthenticated };
     }
 
     if (action.type === "ADD_CART") {
