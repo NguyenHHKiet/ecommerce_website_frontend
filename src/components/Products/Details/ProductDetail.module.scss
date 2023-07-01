@@ -22,6 +22,21 @@
         font-weight: bolder;
         font-size: x-large;
     }
+
+    .wrapper {
+        overflow: hidden;
+        border-radius: 0.5rem;
+        width: 100px;
+        height: 100px;
+        img {
+            width: 100%;
+            height: 100%;
+            transition: scale 400ms;
+        }
+        &:hover img {
+            scale: 120%;
+        }
+    }
 }
 
 .quantity {

@@ -48,7 +48,7 @@ const CartItem = ({ item, setIsLoading }) => {
     return (
         <tr key={item._id.$oid}>
             <td style={{ maxWidth: "7rem" }}>
-                <img src={item.img[0]} alt="img" className="w-100" />
+                <img src={item.img} alt="img" className="w-100" />
             </td>
             <td style={{ minWidth: "10rem" }}>
                 <h6>{item.name}</h6>

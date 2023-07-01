@@ -63,6 +63,7 @@ const ProductDetail = () => {
     const [data] = useLoaderData();
     // localStorage.removeItem("cartArr");
 
+    const [clickImage, setClickImage] = useState();
     const [enteredAmount, setEnteredAmount] = useState(1);
     const dispatch = useDispatch();
 
@@ -89,6 +90,7 @@ const ProductDetail = () => {
         toast("🦄 Wow so easy!");
         const addAmountObject = {
             ...detail,
+            img: clickImage ?? detail.img,
             amount: Number(enteredAmount),
         };
         dispatch({ type: "ADD_CART", item: addAmountObject });
@@ -97,14 +99,28 @@ const ProductDetail = () => {
     const minusHandler = () => setEnteredAmount(enteredAmount - 1);
     const addHandler = () => setEnteredAmount(enteredAmount + 1);
 
+    console.log(detail);
+
     if (detail) {
         const orderList = detail.short_desc.split(".");
         content = (
             <Fragment>
                 <ToastContainer autoClose={2000} />
                 <div className={`${classes.showcase} gap-4 py-4`}>
+                    <div
+                        className={`position-absolute d-flex flex-column gap-2`}>
+                        {detail.img.map((item) => (
+                            <div className={classes.wrapper}>
+                                <img
+                                    src={item}
+                                    onClick={() => setClickImage(item)}
+                                    alt="img"
+                                />
+                            </div>
+                        ))}
+                    </div>
                     <div>
-                        <img src={detail.img} alt="img" />
+                        <img src={clickImage ?? detail.img} alt="img" />
                     </div>
                     <div className="pb-4 fst-italic position-relative">
                         <h1 className="fs-2">{detail.name}</h1>

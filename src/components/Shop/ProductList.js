@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import Categories from "./Categories/Categories";
+import Categories from "../Products/Categories/Categories";
 
 const ProductList = () => {
     useEffect(() => {

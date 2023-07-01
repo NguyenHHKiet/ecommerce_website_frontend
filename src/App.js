@@ -2,7 +2,6 @@ import React, { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { cartLoader } from "./utils/cart";
 import { checkAuthLoader, tokenLoader } from "./utils/auth";
-import { action as logoutAction } from "./pages/Logout";
 import RelatedProductProvider from "./context/RelatedProductProvider";
 
 import Spinner from "react-bootstrap/Spinner";
@@ -75,7 +74,7 @@ const router = createBrowserRouter([
 
             { path: "login", element: <LoginPage /> },
             { path: "register", element: <RegisterPage /> },
-            { path: "logout", action: logoutAction },
+            { path: "logout" },
         ],
     },
 ]);
