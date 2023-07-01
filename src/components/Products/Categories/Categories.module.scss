@@ -46,3 +46,23 @@
 .select {
     max-width: 10rem;
 }
+
+@media (max-width: 768px) {
+    h3 {
+        font-size: medium;
+    }
+    .arrTitle {
+        :nth-child(1) {
+            font-size: small !important;
+        }
+        :nth-child(3) {
+            font-size: small !important;
+        }
+        :nth-child(7) {
+            font-size: small !important;
+        }
+        :nth-child(10) {
+            font-size: small !important;
+        }
+    }
+}

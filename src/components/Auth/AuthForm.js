@@ -1,6 +1,6 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react";
-import { Link, useNavigate, useLocation, redirect } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -40,30 +40,31 @@ const AuthForm = () => {
 
         setValidated(true);
 
-        const enteredEmailValue = enteredEmail.current.value;
-        const enteredPasswordValue = enteredPassword.current.value;
-        let enteredUsernameValue, enteredPhoneValue;
-
         if (form.checkValidity()) {
+            const enteredEmailValue = enteredEmail.current.value;
+            const enteredPasswordValue = enteredPassword.current.value;
+            let enteredUsernameValue, enteredPhoneValue;
+
+            const objData = {
+                email: enteredEmailValue,
+                password: enteredPasswordValue,
+            };
+
             if (pathname === "/register") {
                 enteredUsernameValue = enteredUsername.current.value;
                 enteredPhoneValue = enteredPhone.current.value;
 
-                const objData = {
+                const regData = {
+                    ...objData,
                     username: enteredUsernameValue,
-                    email: enteredEmailValue,
-                    password: enteredPasswordValue,
                     phone: enteredPhoneValue,
                 };
-                dispatch({ type: "ADD_USER", user: objData });
+
+                dispatch({ type: "ADD_USER", user: regData });
                 navigate("/login");
             } else {
-                const objData = {
-                    email: enteredEmailValue,
-                    password: enteredPasswordValue,
-                };
                 dispatch({ type: "ON_LOGIN", user: objData });
-                window.location.replace("/");
+                navigate("/");
             }
         }
     };

@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 
 import classes from "./ListOfProducts.module.scss";
 import ProductItem from "./ProductItem";
-import PopUpDetail from "../Products/PopUpDetail";
+import PopUpDetail from "../Products/PopUp/PopUpDetail";
 
 const ListOfProducts = ({ data }) => {
     const isClose = useSelector((state) => state.onClose);

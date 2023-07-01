@@ -43,7 +43,7 @@ const useGlobalReducer = (state = initialState, action) => {
 
     if (action.type === "ADD_USER") {
         const userArr =
-            JSON.parse(localStorage.getItem("userArr")) || state.userArr;
+            JSON.parse(localStorage.getItem("userArr")) ?? state.userArr;
 
         const existingUserIndex = userArr.findIndex(
             (user) => user.email === action.user.email
@@ -69,7 +69,7 @@ const useGlobalReducer = (state = initialState, action) => {
 
     if (action.type === "ON_LOGIN") {
         const userArr =
-            JSON.parse(localStorage.getItem("userArr")) || state.userArr;
+            JSON.parse(localStorage.getItem("userArr")) ?? state.userArr;
 
         const existingUserIndex = userArr.findIndex(
             (user) =>
@@ -94,11 +94,12 @@ const useGlobalReducer = (state = initialState, action) => {
     if (action.type === "ON_LOGOUT") {
         localStorage.removeItem("currentUser");
         localStorage.removeItem("expiration");
+        return { ...state, isAuthenticated: false };
     }
 
     if (action.type === "ADD_CART") {
         console.log(action.type);
-        const cart = JSON.parse(localStorage.getItem("cartArr")) || state.cart;
+        const cart = JSON.parse(localStorage.getItem("cartArr")) ?? state.cart;
 
         // transform price to number
         const price = action.item.price.slice(0, -3).trim().split(".").join("");
@@ -155,7 +156,7 @@ const useGlobalReducer = (state = initialState, action) => {
     }
     if (action.type === "UPDATE_CART") {
         console.log(action.type);
-        const cart = JSON.parse(localStorage.getItem("cartArr")) || state.cart;
+        const cart = JSON.parse(localStorage.getItem("cartArr")) ?? state.cart;
 
         const existingCartItemIndex = cart.listCart.findIndex(
             (item) => item._id.$oid === action.item.id
@@ -206,7 +207,7 @@ const useGlobalReducer = (state = initialState, action) => {
     }
     if (action.type === "DELETE_CART") {
         console.log(action.type);
-        const cart = JSON.parse(localStorage.getItem("cartArr")) || state.cart;
+        const cart = JSON.parse(localStorage.getItem("cartArr")) ?? state.cart;
 
         const existingCartItemIndex = cart.listCart.findIndex(
             (item) => item._id.$oid === action.item.id

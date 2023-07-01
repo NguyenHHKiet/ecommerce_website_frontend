@@ -1,5 +1,10 @@
-import React from "react";
-import { Link, useLoaderData, useSearchParams } from "react-router-dom";
+import React, { useState } from "react";
+import {
+    Link,
+    useLoaderData,
+    useSearchParams,
+    useNavigate,
+} from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import ProductItem from "../../ListOfProducts/ProductItem";
@@ -27,6 +32,9 @@ const Categories = () => {
     const data = useLoaderData();
     const [params] = useSearchParams();
     const sortId = params.get("sort");
+    const searchId = params.get("search");
+    const navigated = useNavigate();
+    const [enteredSearch, setEnteredSearch] = useState("");
 
     const isData = data.map((product) => {
         return {
@@ -43,7 +51,19 @@ const Categories = () => {
     });
 
     let content = isData;
+    // search items based on input
+    const searchItemsHandler = (event) => {
+        if (event.key === "Enter") navigated(`?search=${enteredSearch}`);
+    };
+
+    if (searchId) {
+        content = isData.filter((item) =>
+            item.name.toLowerCase().includes(searchId.toLowerCase())
+        );
+    }
+
     if (sortId) {
+        // sort based on title
         switch (sortId.toLowerCase()) {
             case "all":
                 content = isData;
@@ -77,13 +97,15 @@ const Categories = () => {
         );
     };
 
-    const categoryLeft = (
+    const ctgTools = (
         <div className="d-flex justify-content-between mb-3">
             <InputGroup className={`${classes.input}`}>
                 <Form.Control
                     placeholder="Enter Search Here!"
                     aria-label="Enter Search Here!"
                     className="py-2"
+                    onChange={(e) => setEnteredSearch(e.target.value)}
+                    onKeyDown={searchItemsHandler}
                 />
             </InputGroup>
             <Form.Select className={classes.select}>
@@ -95,7 +117,7 @@ const Categories = () => {
         </div>
     );
 
-    const categoryRight = (
+    const ctgContent = (
         <div className={`d-grid gap-4 py-4`}>
             <Row>
                 {content.length > 0 ? (
@@ -104,7 +126,6 @@ const Categories = () => {
                             key={product._id.$oid}
                             product={product}
                             isLink={true}
-                            type={"SELECTION"}
                         />
                     ))
                 ) : (
@@ -116,15 +137,15 @@ const Categories = () => {
 
     return (
         <div className={`${classes.showcase} gap-4`}>
-            <div className="">
+            <div className="mb-5 pb-5">
                 <h3 className="text-uppercase fst-italic mb-3">Categories</h3>
                 <div className={classes.arrTitle}>
                     {arrTitle.map((item) => Title(item))}
                 </div>
             </div>
             <div>
-                {categoryLeft}
-                {categoryRight}
+                {ctgTools}
+                {ctgContent}
             </div>
         </div>
     );

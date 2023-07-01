@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import ProductList from "../components/Products/ProductList";
+import ProductList from "../components/Shop/ProductList";
 
 const ShopPage = () => {
     return (

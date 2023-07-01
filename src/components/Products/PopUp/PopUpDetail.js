@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Modal from "../UI/Modal";
+import Modal from "../../UI/Modal";
 
 import classes from "./PopUpDetail.module.scss";
 
