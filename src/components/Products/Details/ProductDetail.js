@@ -115,7 +115,8 @@ const ProductDetail = () => {
             <Fragment>
                 <ToastContainer autoClose={2000} />
                 <div className={`${classes.showcase} gap-4 py-4`}>
-                    <div className={`d-flex flex-row flex-md-column gap-2`}>
+                    <div
+                        className={`d-flex flex-wrap flex-row flex-md-column gap-2`}>
                         {detail.img.map((item) => (
                             <div className={classes.wrapper}>
                                 <img
