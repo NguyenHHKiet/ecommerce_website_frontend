@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import RelatedContext from "../../../context/related-product";
 import Row from "react-bootstrap/Row";
@@ -61,6 +61,7 @@ const Description = ({ orderList, related }) => (
 
 const ProductDetail = () => {
     const [data] = useLoaderData();
+    const { productId } = useParams();
     // localStorage.removeItem("cartArr");
 
     const [clickImage, setClickImage] = useState();
@@ -72,7 +73,7 @@ const ProductDetail = () => {
     let content;
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, []);
+    }, [productId]);
     // localStorage.clear();
 
     // Not Founded Product Id.
@@ -84,8 +85,11 @@ const ProductDetail = () => {
                 Not Founded Product Id.
             </h1>
         );
+
+    // transform type if data available
     const detail = transformData(data);
 
+    // save to local storage
     const addToCartHandler = () => {
         toast("🦄 Wow so easy!");
         const addAmountObject = {
@@ -96,10 +100,14 @@ const ProductDetail = () => {
         dispatch({ type: "ADD_CART", item: addAmountObject });
     };
 
-    const minusHandler = () => setEnteredAmount(enteredAmount - 1);
+    const minusHandler = () => {
+        if (enteredAmount > 1) {
+            setEnteredAmount(enteredAmount - 1);
+        } else {
+            return;
+        }
+    };
     const addHandler = () => setEnteredAmount(enteredAmount + 1);
-
-    console.log(detail);
 
     if (detail) {
         const orderList = detail.short_desc.split(".");
@@ -107,8 +115,7 @@ const ProductDetail = () => {
             <Fragment>
                 <ToastContainer autoClose={2000} />
                 <div className={`${classes.showcase} gap-4 py-4`}>
-                    <div
-                        className={`position-absolute d-flex flex-column gap-2`}>
+                    <div className={`d-flex flex-row flex-md-column gap-2`}>
                         {detail.img.map((item) => (
                             <div className={classes.wrapper}>
                                 <img
@@ -119,7 +126,7 @@ const ProductDetail = () => {
                             </div>
                         ))}
                     </div>
-                    <div>
+                    <div className="">
                         <img src={clickImage ?? detail.img} alt="img" />
                     </div>
                     <div className="pb-4 fst-italic position-relative">

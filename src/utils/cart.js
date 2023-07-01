@@ -6,6 +6,7 @@ export function getCartToken() {
     return token;
 }
 
+// take data while rendering page
 export function cartLoader() {
     const cart = getCartToken();
     return cart;
