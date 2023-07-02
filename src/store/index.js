@@ -23,13 +23,13 @@ const useGlobalReducer = (state = initialState, action) => {
         return {
             ...state,
             info: {
-                name: action.payload.info.name,
-                price: action.payload.info.price,
-                category: action.payload.info.category,
-                img: action.payload.info.img,
-                long_desc: action.payload.info.long_desc,
-                short_desc: action.payload.info.short_desc,
-                _id: action.payload.info._id,
+                name: action.payload.name,
+                price: action.payload.price,
+                category: action.payload.category,
+                img: action.payload.img,
+                long_desc: action.payload.long_desc,
+                short_desc: action.payload.short_desc,
+                _id: action.payload._id,
             },
             onClose: true,
         };
@@ -112,11 +112,9 @@ const useGlobalReducer = (state = initialState, action) => {
         const existingCartItem = cart.listCart[existingCartItemIndex];
         let updatedItems;
 
-        // transform price to number
-        const price = action.item.price.slice(0, -3).trim().split(".").join("");
         // total amount of price is
         const updatedTotalAmount =
-            cart.totalAmount + price * action.item.amount;
+            cart.totalAmount + action.item.price * action.item.amount;
 
         if (existingCartItem) {
             // updated quantity
@@ -169,9 +167,7 @@ const useGlobalReducer = (state = initialState, action) => {
         const existingCartItem = cart.listCart[existingCartItemIndex];
 
         // subtract the amount out
-        const oldPrice =
-            existingCartItem.price.slice(0, -3).trim().split(".").join("") *
-            existingCartItem.amount;
+        const oldPrice = existingCartItem.price * existingCartItem.amount;
         let updatedTotalAmount = cart.totalAmount - oldPrice;
         // updated quantity
         const updatedItem = {
@@ -180,9 +176,7 @@ const useGlobalReducer = (state = initialState, action) => {
         };
 
         // transform price to number
-        const newPrice =
-            updatedItem.price.slice(0, -3).trim().split(".").join("") *
-            updatedItem.amount;
+        const newPrice = updatedItem.price * updatedItem.amount;
         // total amount of price is
         updatedTotalAmount += newPrice;
         let updatedItems;
@@ -220,11 +214,7 @@ const useGlobalReducer = (state = initialState, action) => {
 
         const existingCartItem = cart.listCart[existingCartItemIndex];
 
-        const price = existingCartItem.price
-            .slice(0, -3)
-            .trim()
-            .split(".")
-            .join("");
+        const price = existingCartItem.price;
 
         let updatedItems, updatedTotalAmount;
 

@@ -5,22 +5,11 @@ import Row from "react-bootstrap/Row";
 import classes from "./ListOfProducts.module.scss";
 import ProductItem from "./ProductItem";
 import PopUpDetail from "../Products/PopUp/PopUpDetail";
+import { transformObject } from "../../utils/transformData";
 
 const ListOfProducts = ({ data }) => {
     const isClose = useSelector((state) => state.onClose);
-    const isData = data.map((product) => {
-        return {
-            name: product.name,
-            price: product.price,
-            category: product.category,
-            img: [product.img1, product.img2, product.img3, product.img4],
-            long_desc: product.long_desc,
-            short_desc: product.short_desc,
-            _id: {
-                $oid: product._id.$oid,
-            },
-        };
-    });
+    const isData = data.map((product) => transformObject(product).info);
 
     return (
         <Fragment>

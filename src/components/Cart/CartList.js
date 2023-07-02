@@ -6,6 +6,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import CartTable from "./CartTable";
 import { cartLoader } from "../../utils/cart";
+import { transformPrice } from "../../utils/transformData";
 
 const CartList = () => {
     const cart = useLoaderData();
@@ -18,14 +19,13 @@ const CartList = () => {
         window.scrollTo(0, 0);
     }, []);
 
+    // isLoading helps determine if item remove is loading take new cartLoader
     useEffect(() => {
         setData(cartLoader);
     }, [isLoading]);
 
     if (data) {
-        totalAmount = `${data?.totalAmount
-            .toLocaleString("vi-VN", { style: "currency", currency: "VND" })
-            .slice(0, -1)} VND`;
+        totalAmount = transformPrice(data?.totalAmount);
     }
 
     return (

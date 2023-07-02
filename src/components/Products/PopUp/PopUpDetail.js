@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "../../UI/Modal";
 
 import classes from "./PopUpDetail.module.scss";
+import { transformPrice } from "../../../utils/transformData";
 
 const PopUpDetail = () => {
     const dispatch = useDispatch();
@@ -11,10 +12,12 @@ const PopUpDetail = () => {
     // show and hide about description detail
     const hidePopUpHandler = () => dispatch({ type: "HIDE_POPUP" });
 
+    const price = transformPrice(isInfo.price);
+
     let content = (
         <div className={`${classes.showcase} gap-4`}>
             <div>
-                <img src={isInfo.img[0]} alt="img" />
+                <img src={isInfo.img} alt="img" />
             </div>
             <div className="py-md-4 py-0 fst-italic">
                 <i
@@ -22,8 +25,8 @@ const PopUpDetail = () => {
                     style={{ cursor: "pointer" }}
                     onClick={hidePopUpHandler}></i>
                 <h1 className="ms-2">{isInfo.name}</h1>
-                <p className="ms-2">{isInfo.price}</p>
-                <p className="ms-2 d-none d-md-block">{isInfo.long_desc}</p>
+                <p className="ms-2">{price}</p>
+                <p className="ms-2 d-none d-md-block">{isInfo.short_desc}</p>
                 <Link to={"/shop"} onClick={hidePopUpHandler}>
                     <button className="bg-black text-white py-2 px-4 mt-2 fst-italic">
                         <i className="bi bi-cart-check-fill pe-2"></i> Browse

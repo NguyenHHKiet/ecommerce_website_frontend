@@ -1,18 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
-
 .showcase {
     display: grid;
     > :nth-child(2) {
         order: -1;
     }
-    > :last-child {
-        > :nth-child(3) {
-            height: 15rem;
-            // padding: 0.5rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-    }
+
     img {
         width: 100%;
     }

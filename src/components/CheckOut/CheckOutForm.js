@@ -5,19 +5,21 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 import { cartLoader } from "../../utils/cart";
+import { transformPrice } from "../../utils/transformData";
 
 const CheckOutForm = () => {
     const data = cartLoader();
     const [validated, setValidated] = useState(false);
     let totalAmount;
 
-    const TransformItem = ({ item }) => {
+    const Item = ({ item }) => {
+        const price = transformPrice(item.price);
         return (
             <>
                 <div>
                     <h6>{item.name}</h6>
                     <p>
-                        {item.price} X {item.amount}
+                        {price} X {item.amount}
                     </p>
                 </div>
                 <hr className="mb-1" />
@@ -26,9 +28,7 @@ const CheckOutForm = () => {
     };
 
     if (data) {
-        totalAmount = `${data?.totalAmount
-            .toLocaleString("vi-VN", { style: "currency", currency: "VND" })
-            .slice(0, -1)} VND`;
+        totalAmount = transformPrice(data?.totalAmount);
     }
 
     const handleSubmit = (event) => {
@@ -119,7 +119,7 @@ const CheckOutForm = () => {
                     <Form className="bg-body-secondary p-4 rounded-1 mt-sm-2 mt-md-0">
                         <h4 className="text-uppercase my-3">your order</h4>
                         {data.listCart.map((item) => (
-                            <TransformItem key={item._id} item={item} />
+                            <Item key={item._id} item={item} />
                         ))}
                         <Form.Group
                             as={Row}

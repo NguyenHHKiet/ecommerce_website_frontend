@@ -8,24 +8,9 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import ProductItem from "../../ListOfProducts/ProductItem";
+import { transformObject, transformPrice } from "../../../utils/transformData";
 
 import classes from "./ProductDetail.module.scss";
-
-const transformData = (product) => {
-    const price = `${Number(product.price)
-        .toLocaleString("vi-VN", { style: "currency", currency: "VND" })
-        .slice(0, -1)} VND`;
-
-    return {
-        name: product.name,
-        price: price,
-        category: product.category,
-        img: [product.img1, product.img2, product.img3, product.img4],
-        long_desc: product.long_desc,
-        short_desc: product.short_desc,
-        _id: product._id,
-    };
-};
 
 const Description = ({ orderList, related }) => (
     <div className={classes.description}>
@@ -87,7 +72,7 @@ const ProductDetail = () => {
         );
 
     // transform type if data available
-    const detail = transformData(data);
+    const detail = transformObject(data).info;
 
     // save to local storage
     const addToCartHandler = () => {
@@ -100,6 +85,7 @@ const ProductDetail = () => {
         dispatch({ type: "ADD_CART", item: addAmountObject });
     };
 
+    // button counter
     const minusHandler = () => {
         if (enteredAmount > 1) {
             setEnteredAmount(enteredAmount - 1);
@@ -110,15 +96,17 @@ const ProductDetail = () => {
     const addHandler = () => setEnteredAmount(enteredAmount + 1);
 
     if (detail) {
-        const orderList = detail.short_desc.split(".");
+        const orderList = detail.long_desc.split("•");
+        const price = transformPrice(detail.price);
+        // rendering the order
         content = (
             <Fragment>
                 <ToastContainer autoClose={2000} />
                 <div className={`${classes.showcase} gap-4 py-4`}>
                     <div
                         className={`d-flex flex-wrap flex-row flex-md-column gap-2`}>
-                        {detail.img.map((item) => (
-                            <div className={classes.wrapper}>
+                        {detail.img.map((item, index) => (
+                            <div key={index} className={classes.wrapper}>
                                 <img
                                     src={item}
                                     onClick={() => setClickImage(item)}
@@ -130,58 +118,64 @@ const ProductDetail = () => {
                     <div className="">
                         <img src={clickImage ?? detail.img} alt="img" />
                     </div>
-                    <div className="pb-4 fst-italic position-relative">
-                        <h1 className="fs-2">{detail.name}</h1>
-                        <p className="py-3 fs-4">{detail.price}</p>
-                        <p className="">{detail.long_desc}</p>
-                        <div className="d-flex">
+                    <div className="pb-4 fst-italic position-relative d-flex flex-column justify-content-between">
+                        <div>
+                            <h1 className="fs-2">{detail.name}</h1>
+                            <p className="py-3 fs-4">{price}</p>
+                            <p>{detail.short_desc}</p>
+                        </div>
+                        <div>
                             <p className="text-uppercase text-black">
                                 category:
+                                <span className="ps-2 text-lowercase text-secondary">
+                                    {detail.category}
+                                </span>
                             </p>
-                            <p className="ps-2">{detail.category}</p>
-                        </div>
-                        <InputGroup className={classes.quantity} hasValidation>
-                            <Form.Control
-                                placeholder="QUANTITY"
-                                aria-label="QUANTITY"
-                                className="rounded-0 fst-italic opacity-75"
-                                type="number"
-                                min={0}
-                                onChange={(e) => {
-                                    setEnteredAmount(e.target.value);
-                                }}
-                            />
-                            <div className={classes.buttonQuantity}>
-                                <button
-                                    className="btn minus1"
-                                    onClick={minusHandler}>
-                                    -
-                                </button>
-                                <input
-                                    id="id_form-0-quantity"
-                                    min={0}
-                                    name="form-0-quantity"
-                                    readOnly
-                                    value={enteredAmount}
+                            <InputGroup
+                                className={classes.quantity}
+                                hasValidation>
+                                <Form.Control
+                                    placeholder="QUANTITY"
+                                    aria-label="QUANTITY"
+                                    className="rounded-0 fst-italic opacity-75"
                                     type="number"
+                                    min={0}
                                     onChange={(e) => {
                                         setEnteredAmount(e.target.value);
                                     }}
                                 />
-                                <button
-                                    className="btn add1"
-                                    onClick={addHandler}>
-                                    +
-                                </button>
-                            </div>
-                            <Button
-                                onClick={addToCartHandler}
-                                variant="dark"
-                                style={{ height: "min-content" }}
-                                className="bg-black text-white fst-italic rounded-0">
-                                Add to Cart
-                            </Button>
-                        </InputGroup>
+                                <div className={classes.buttonQuantity}>
+                                    <button
+                                        className="btn minus1"
+                                        onClick={minusHandler}>
+                                        -
+                                    </button>
+                                    <input
+                                        id="id_form-0-quantity"
+                                        min={0}
+                                        name="form-0-quantity"
+                                        readOnly
+                                        value={enteredAmount}
+                                        type="number"
+                                        onChange={(e) => {
+                                            setEnteredAmount(e.target.value);
+                                        }}
+                                    />
+                                    <button
+                                        className="btn add1"
+                                        onClick={addHandler}>
+                                        +
+                                    </button>
+                                </div>
+                                <Button
+                                    onClick={addToCartHandler}
+                                    variant="dark"
+                                    style={{ height: "min-content" }}
+                                    className="bg-black text-white fst-italic rounded-0">
+                                    Add to Cart
+                                </Button>
+                            </InputGroup>
+                        </div>
                     </div>
                 </div>
                 <Description orderList={orderList} related={relatedCxt.items} />
