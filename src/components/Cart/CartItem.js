@@ -11,6 +11,7 @@ const CartItem = ({ item, setIsLoading }) => {
     const price = transformPrice(item.price);
     const total = transformPrice(item.price * enteredAmount);
 
+    // function action dispatched
     const moduleAction = (type, item) => {
         dispatch({ type: type, item: item });
         setIsLoading((prevent) => !prevent); // help lifecycle return new local storage
@@ -18,7 +19,7 @@ const CartItem = ({ item, setIsLoading }) => {
 
     // delete item from
     const deleteItemCartHandler = () => {
-        moduleAction("DELETE_CART", { id: item._id.$oid });
+        moduleAction("DELETE_CART", { _id: item._id });
     };
 
     // updated amount of cart items
@@ -27,7 +28,7 @@ const CartItem = ({ item, setIsLoading }) => {
             setEnteredAmount(enteredAmount - 1);
             moduleAction("UPDATE_CART", {
                 amount: enteredAmount - 1,
-                id: item._id.$oid,
+                _id: item._id,
             });
         } else {
             deleteItemCartHandler();
@@ -37,7 +38,7 @@ const CartItem = ({ item, setIsLoading }) => {
         setEnteredAmount(enteredAmount + 1);
         moduleAction("UPDATE_CART", {
             amount: enteredAmount + 1,
-            id: item._id.$oid,
+            _id: item._id,
         });
     };
 

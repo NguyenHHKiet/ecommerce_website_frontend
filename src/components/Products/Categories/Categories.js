@@ -11,6 +11,7 @@ import ProductItem from "../../ListOfProducts/ProductItem";
 import Row from "react-bootstrap/esm/Row";
 
 import classes from "./Categories.module.scss";
+import { transformObject } from "../../../utils/transformData";
 
 const arrTitle = [
     "APPLE",
@@ -36,33 +37,23 @@ const Categories = () => {
     const navigated = useNavigate();
     const [enteredSearch, setEnteredSearch] = useState("");
 
-    const isData = data.map((product) => {
-        return {
-            name: product.name,
-            price: product.price,
-            category: product.category,
-            img: [product.img1, product.img2, product.img3, product.img4],
-            long_desc: product.long_desc,
-            short_desc: product.short_desc,
-            _id: {
-                $oid: product._id.$oid,
-            },
-        };
-    });
+    const isData = data.map((product) => transformObject(product).info);
 
     let content = isData;
-    // search items based on input
+    // handling the linked
     const searchItemsHandler = (event) => {
         if (event.key === "Enter" || event.charCode === 13)
             navigated(`?search=${enteredSearch}`);
     };
 
+    // searching based on input type
     if (searchId) {
         content = isData.filter((item) =>
             item.name.toLowerCase().includes(searchId.toLowerCase())
         );
     }
 
+    // searching based on title category
     if (sortId) {
         // sort based on title
         switch (sortId.toLowerCase()) {
@@ -72,7 +63,8 @@ const Categories = () => {
 
             default:
                 content = isData.filter(
-                    (item) => item.category === sortId.toLowerCase()
+                    (item) =>
+                        item.category.toLowerCase() === sortId.toLowerCase()
                 );
                 break;
         }

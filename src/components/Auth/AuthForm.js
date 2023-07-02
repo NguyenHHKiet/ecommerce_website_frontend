@@ -1,7 +1,7 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -21,6 +21,7 @@ import classes from "./AuthForm.module.scss";
 const AuthForm = () => {
     const { pathname } = useLocation();
     const dispatch = useDispatch();
+    const isAuthenticated = useSelector((state) => state.isAuthenticated);
     const navigate = useNavigate();
 
     const [validated, setValidated] = useState(false);
@@ -63,8 +64,13 @@ const AuthForm = () => {
                 dispatch({ type: "ADD_USER", user: regData });
                 navigate("/login");
             } else {
+                // create a expiration
+                const expiration = new Date();
+                expiration.setHours(expiration.getHours() + 1);
+                localStorage.setItem("expiration", expiration.toISOString());
+                // updated local
                 dispatch({ type: "ON_LOGIN", user: objData });
-                navigate("/");
+                if (isAuthenticated) navigate("/");
             }
         }
     };

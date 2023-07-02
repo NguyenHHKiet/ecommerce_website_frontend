@@ -1,4 +1,6 @@
 import { createStore } from "redux";
+import { findCartItem } from "./cart";
+import { findUser } from "./auth";
 
 const initialState = {
     info: {
@@ -42,13 +44,7 @@ const useGlobalReducer = (state = initialState, action) => {
     }
 
     if (action.type === "ADD_USER") {
-        const userArr =
-            JSON.parse(localStorage.getItem("userArr")) ?? state.userArr;
-
-        const existingUserIndex = userArr.findIndex(
-            (user) => user.email === action.user.email
-        );
-        const existingUser = userArr[existingUserIndex];
+        const { existingUser, userArr } = findUser(state, action);
         let updatedUserArr;
 
         if (!existingUser) {
@@ -68,31 +64,18 @@ const useGlobalReducer = (state = initialState, action) => {
     }
 
     if (action.type === "ON_LOGIN") {
-        const userArr =
-            JSON.parse(localStorage.getItem("userArr")) ?? state.userArr;
-
-        // find the user exists
-        const existingUserIndex = userArr.findIndex(
-            (user) =>
-                user.email === action.user.email &&
-                user.password === action.user.password
-        );
-        // take user data from array
-        const existingUser = userArr[existingUserIndex];
+        const { existingUser } = findUser(state, action);
 
         if (existingUser) {
             // save existing user current
             localStorage.setItem("currentUser", JSON.stringify(existingUser));
             // localStorage.setItem("token", generateString(12));
-            const expiration = new Date();
-            expiration.setHours(expiration.getHours() + 1);
-            localStorage.setItem("expiration", expiration.toISOString());
             // authentication
             return { ...state, isAuthenticated: true };
         } else {
             alert("Please enter a new email & password");
+            return { ...state, isAuthenticated: false };
         }
-        return state;
     }
 
     if (action.type === "ON_LOGOUT") {
@@ -103,13 +86,10 @@ const useGlobalReducer = (state = initialState, action) => {
 
     if (action.type === "ADD_CART") {
         console.log(action.type);
-        const cart = JSON.parse(localStorage.getItem("cartArr")) ?? state.cart;
-
-        const existingCartItemIndex = cart.listCart.findIndex(
-            (item) => item._id.$oid === action.item._id.$oid
+        const { cart, existingCartItem, existingCartItemIndex } = findCartItem(
+            state,
+            action
         );
-
-        const existingCartItem = cart.listCart[existingCartItemIndex];
         let updatedItems;
 
         // total amount of price is
@@ -158,29 +138,24 @@ const useGlobalReducer = (state = initialState, action) => {
     }
     if (action.type === "UPDATE_CART") {
         console.log(action.type);
-        const cart = JSON.parse(localStorage.getItem("cartArr")) ?? state.cart;
+        const {
+            cart,
+            existingCartItem: oldCartItem,
+            existingCartItemIndex,
+        } = findCartItem(state, action);
 
-        const existingCartItemIndex = cart.listCart.findIndex(
-            (item) => item._id.$oid === action.item.id
-        );
-
-        const existingCartItem = cart.listCart[existingCartItemIndex];
-
-        // subtract the amount out
-        const oldPrice = existingCartItem.price * existingCartItem.amount;
-        let updatedTotalAmount = cart.totalAmount - oldPrice;
         // updated quantity
         const updatedItem = {
-            ...existingCartItem,
+            ...oldCartItem,
             amount: action.item.amount,
         };
-
         // transform price to number
+        // subtract the amount out
+        const oldPrice = oldCartItem.price * oldCartItem.amount;
         const newPrice = updatedItem.price * updatedItem.amount;
-        // total amount of price is
-        updatedTotalAmount += newPrice;
-        let updatedItems;
+        let updatedTotalAmount = cart.totalAmount - oldPrice + newPrice;
 
+        let updatedItems;
         // create new array
         updatedItems = [...cart.listCart];
         // updated item in cart with index
@@ -205,14 +180,7 @@ const useGlobalReducer = (state = initialState, action) => {
     }
     if (action.type === "DELETE_CART") {
         console.log(action.type);
-        const cart = JSON.parse(localStorage.getItem("cartArr")) ?? state.cart;
-
-        // find the item in the cart
-        const existingCartItemIndex = cart.listCart.findIndex(
-            (item) => item._id.$oid === action.item.id
-        );
-
-        const existingCartItem = cart.listCart[existingCartItemIndex];
+        const { cart, existingCartItem } = findCartItem(state, action);
 
         const price = existingCartItem.price;
 
