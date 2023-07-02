@@ -13,7 +13,7 @@ const CartItem = ({ item, setIsLoading }) => {
 
     const moduleAction = (type, item) => {
         dispatch({ type: type, item: item });
-        setIsLoading((prevent) => !prevent);
+        setIsLoading((prevent) => !prevent); // help lifecycle return new local storage
     };
 
     // delete item from
