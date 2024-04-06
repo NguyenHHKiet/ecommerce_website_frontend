@@ -1,10 +1,26 @@
-# BOUTIQUE
+# BOUTIQUE [Under Construction Updating]
 
 ![image](image.png)
 
 ## Introduction
 
 Experience unlimited phone shopping at [BOUTIQUE](https://rjs-asm03-nguyenhhkiet.vercel.app/). With a variety of designs, quality and value, we bring you a convenient and reliable online shopping space. Explore the world of smart technology today!
+
+### Description
+
+Main goals of the project:
+
+-   Create a total Layout including NavBar and Footer
+-   List of categories
+-   List of products
+-   Display product detail popup
+-   Create a product list view interface
+-   Create an interface to view product details
+-   Handling account login/registration
+-   Add product to cart
+-   Create a shopping cart view interface
+-   Create Checkout interface
+-   Create livechat screen
 
 ## Tech Stack
 
