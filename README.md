@@ -1,4 +1,4 @@
-# BOUTIQUE [Under Construction Updating]
+# BOUTIQUE APPLE [Under Renovation]
 
 ![image](image.png)
 
@@ -8,7 +8,7 @@ Experience unlimited phone shopping at [BOUTIQUE](https://rjs-asm03-nguyenhhkiet
 
 ### Description
 
-Main goals of the project:
+Project Overview:
 
 -   Create a total Layout including NavBar and Footer
 -   List of categories
