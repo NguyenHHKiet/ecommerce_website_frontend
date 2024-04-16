@@ -1,4 +1,4 @@
-# BOUTIQUE APPLE [Under Renovation]
+# BOUTIQUE APPLE
 
 ![image](image.png)
 
